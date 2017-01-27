@@ -1,0 +1,35 @@
+﻿@using Shop.Controllers
+
+@{
+    ViewBag.Title = "OrderNow";
+}
+
+<h2>Twoje zamówienia</h2>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Ilość</td>
+            <td>Price</td>
+            <td>Usuń</td>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (Item prod in (List<Item>)Session["cart"])
+        {
+            <tr>
+                <td>@prod.Product.Name</td>
+                <td>@prod.Quantity</td>
+                <td>@prod.Product.Price</td>
+                <td>@Html.ActionLink("Usuń produkt", "DeleteItem", "Shop", new {id=prod.Product.ProductId}, null)</td>
+            </tr>
+        }
+        <tr class="success">
+            <td>Suma</td>
+            <td colspan="2" style="text-align: center">@(((List<Item>)Session["cart"]).Sum(p => p.Product.Price * p.Quantity))</td>
+        </tr>
+    </tbody>
+</table>
+
